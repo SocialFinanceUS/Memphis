@@ -115,61 +115,67 @@ abline(reg3)
 dev.off()
 
 ### UNRELATED HISTOGRAM WORK FOR DC PROJECT
-set1<-rnorm(100000,0.4,0.1)
-q0251<-quantile(set1,.025)
-q9751<-quantile(set1,.975)
-q841<-quantile(set1,.84)
-q161<-quantile(set1,.16)
-q991<-quantile(set1,.995)
-q011<-quantile(set1,.005)
+set.seed(01238)
+n <- 100000
+effect <- 0.4
+se1 <- 0.1
+se2 <- 0.125
+se3 <- 0.15
+
+set1<-rnorm(n,effect,se1)
+q025.1<-quantile(set1,.025) #2 SDs
+q975.1<-quantile(set1,.975) #2 SDs
+q84.1<-quantile(set1,.84)   #1 SDs
+q16.1<-quantile(set1,.16)   #1 SDs
+q99.1<-quantile(set1,.995)  #3 SDs
+q01.1<-quantile(set1,.005)  #3 SDs
 
 
-set2<-rnorm(100000,0.4,0.125)
-q0252<-quantile(set2,.025)
-q9752<-quantile(set2,.975)
-q842<-quantile(set2,.84)
-q162<-quantile(set2,.16)
-q992<-quantile(set2,.995)
-q012<-quantile(set2,.005)
+set2<-rnorm(n,effect,se2)
+q025.2<-quantile(set2,.025)
+q975.2<-quantile(set2,.975)
+q84.2<-quantile(set2,.84)
+q16.2<-quantile(set2,.16)
+q99.2<-quantile(set2,.995)
+q01.2<-quantile(set2,.005)
 
-
-set3<-rnorm(100000,0.4,0.15)
-q0253<-quantile(set3,.025)
-q9753<-quantile(set3,.975)
-q843<-quantile(set3,.84)
-q163<-quantile(set3,.16)
-q993<-quantile(set3,.995)
-q013<-quantile(set3,.005)
+set3<-rnorm(n,effect,se3)
+q025.3<-quantile(set3,.025)
+q975.3<-quantile(set3,.975)
+q84.3<-quantile(set3,.84)
+q16.3<-quantile(set3,.16)
+q99.3<-quantile(set3,.995)
+q01.3<-quantile(set3,.005)
 
 
 ### PLOT THE HISTOGRAM W/ 95% CIs 
 plot(density(set1, bw="sj"), xlab="Reduction in Probability of Teen Pregnancy", ylab="Density", main="Simulations of Teen Pregnancy Reduction")
 lines(density(set2, bw="sj"), col = "blue")
 lines(density(set3, bw="sj"), col = "red")
-abline(v=q9751,col="black")
-abline(v=q0251,col="black")
-abline(v=q9752,col="blue")
-abline(v=q0252,col="blue")
-abline(v=q9753,col="red")
-abline(v=q0253,col="red")
+abline(v=q975.1,col="black")
+abline(v=q025.1,col="black")
+abline(v=q975.2,col="blue")
+abline(v=q025.2,col="blue")
+abline(v=q975.3,col="red")
+abline(v=q025.3,col="red")
 
 legend(.7, 3, c("Std. Dev. = 0.1","Std. Dev. = 0.125","Std. Dev. = 0.15"), cex=0.8, col=c(1,4,2), lty=c(1), bty="n", title="Assumptions")
 
 
 
-rbind(q0251,q0252,q0253)
-rbind(q9751,q9752,q9753)
-rbind(q161,q162,q163)
-rbind(q841,q842,q843)
-rbind(q011,q012,q013)
-rbind(q991,q992,q993)
+rbind(q025.1,q025.2,q025.3)
+rbind(q975.1,q975.2,q975.3)
+rbind(q16.1,q16.2,q16.3)
+rbind(q84.1,q84.2,q84.3)
+rbind(q01.1,q01.2,q01.3)
+rbind(q99.1,q99.2,q99.3)
 
-mymatrix<-as.data.frame(cbind(rbind(q011,q012,q013),
-      rbind(q991,q992,q993),
-      rbind(q0251,q0252,q0253),
-      rbind(q9751,q9752,q9753),
-      rbind(q011,q012,q013),
-      rbind(q841,q842,q843)))
+mymatrix<-as.data.frame(cbind(rbind(q01.1,q01.2,q01.3),
+      rbind(q99.1,q99.2,q99.3),
+      rbind(q025.1,q025.2,q025.3),
+      rbind(q975.1,q975.2,q975.3),
+      rbind(q01.1,q01.2,q01.3),
+      rbind(q84.1,q84.2,q84.3)))
 setwd("C:/Users/ajutca/Documents")
 write.csv(mymatrix,"DCsims.csv")
 
